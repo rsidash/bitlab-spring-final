@@ -29,7 +29,6 @@ public class TaskController {
     @GetMapping("/tasks/{id}/edit")
     public String editTask(@PathVariable Long id, Model model) {
         model.addAttribute("task", taskService.findById(id));
-        model.addAttribute("comments", commentService.findAllByTaskId(id));
 
         return "task";
     }
@@ -46,9 +45,10 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/{id}/delete")
-    public String dropTask(@PathVariable Long id) {
+    public String dropTask(@PathVariable Long id,
+                           @RequestParam("folderId") Long folderId) {
         taskService.delete(id);
 
-        return "redirect:/";
+        return "redirect:/" + folderId;
     }
 }
