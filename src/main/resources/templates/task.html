@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main.html">
+
+<div layout:fragment="mainFragment">
+    <form th:action="'/tasks/' + ${task.getId()} + '/edit'" method="post">
+        <div class="" id="viewTaskModal">
+            <div class="">
+                <div class="">
+
+                    <h1 class="">EDIT TASK</h1>
+
+                    <div class="">
+                        <input type="hidden" name="folderId" th:value="${task.getFolder().getId()}">
+                        <div class="mb-3">
+                            <label class="form-label" for="view-title">TASK TITLE:</label>
+                            <input class="form-control" id="view-title" placeholder="Task Title" name="title"
+                                   th:value="${task.getTitle()}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="view-desc">TASK DESCRIPTION:</label>
+                            <textarea class="form-control" id="view-desc" name="description"
+                                      th:text="${task.getDescription()}"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="view-status">TASK STATUS:</label>
+                            <select class="form-control" name="status" id="view-status">
+                                <option value="0" th:selected="${task.status == 0}">TO DO</option>
+                                <option value="1" th:selected="${task.status == 1}">IN TEST</option>
+                                <option value="2" th:selected="${task.status == 2}">DONE</option>
+                                <option value="3" th:selected="${task.status == 3}">FAILED</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-success">EDIT TASK</button>
+
+                        <form th:action="'/tasks/' + ${task.getId()} + '/delete'" method="post">
+                            <button class="btn btn-danger">DELETE TASK</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <form th:action="'/tasks/' + ${task.getId()} + '/edit/add-comment'" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"></label>
+                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary">Add comment</button>
+        </form>
+
+        <div>
+            <input th:each="comment : ${comments}"
+                   class="form-control mb-2" type="text" th:value="${comment.getComment()}" aria-label="Disabled input example"
+                   disabled readonly>
+        </div>
+    </div>
+
+</div>
+</html>
